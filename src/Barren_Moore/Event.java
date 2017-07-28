@@ -15,7 +15,8 @@ public class Event {
     String Question = "";
     String choices_L = "L";
     String choices_R = "R";
-    boolean dune =false;
+    boolean dune = false;
+    String enviromine = "Barren Moore";
 
 
     public Event(int id, String info, String aTry, int lat, int lon) {
@@ -50,6 +51,14 @@ public class Event {
 
     }
 
+    public String getEnviromine() {
+        return enviromine;
+    }
+
+    public void setEnviromine(String enviromine) {
+        this.enviromine = enviromine;
+    }
+
     public boolean isDune() {
         return dune;
     }
@@ -75,13 +84,12 @@ public class Event {
     }
 
     public String getChoices() {
-        return choices_L + "\n" + choices_R;
+        return "1. "+choices_L + "\n2. " + choices_R;
     }
 
     public String getChoices_R() {
         return choices_R;
     }
-
 
 
     public Event getLeft() {
