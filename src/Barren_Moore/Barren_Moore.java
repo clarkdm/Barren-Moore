@@ -36,10 +36,13 @@ public class Barren_Moore {
 
     public String get_input_output(Event output) {
         output(output.getInfo());
-        Get_input.sc.nextLine();
+        output.setDune(true);
         if (output.isPik()) {
+            Get_input.sc.nextLine();
+            output(output.getQuestion());
             output(output.getChoices());
         } else {
+
             return "";
         }
         String next = Get_input.sc.nextLine();
@@ -67,7 +70,7 @@ public class Barren_Moore {
 
         for (int i = 0; i < map.size(); i++) {
 
-            System.out.println(dial_reads(map.get(i)));
+            //System.out.println(dial_reads(map.get(i)));
 
             if (!map.get(i).isDune()) {
                 double x = dial_reads(map.get(i));
@@ -100,6 +103,23 @@ public class Barren_Moore {
         return index;
     }
 
+    public int get_On_Event_index() {
+        double temp = Integer.MAX_VALUE;
+        int index = 0;
+        int p_lat = p.getLat();
+        int p_lon = p.getLon();
+
+        for (int i = 0; i < map.size(); i++) {
+            int m_lat = map.get(i).getLat();
+            int m_lon = map.get(i).getLon();
+//            System.out.println(dial_reads(map.get(i)));
+            if (p_lat == m_lat && p_lon == m_lon && !map.get(i).isDune()) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
 
     public double dial_reads(Event e) {
         int p_lat = p.getLat();
@@ -125,10 +145,10 @@ public class Barren_Moore {
 
         while (true) {
 
-            int e = nearest_Event_index();
-            output(e + "tt############################");
+            int e = get_On_Event_index();
+            //output(e + "tt############################");
 
-            if (dial_reads(map.get(e)) <= 0.5) {
+            if (get_On_Event_index() >= 0) {
                 map.get(e).setDune(!run_Event(map.get(e)));
             } else {
                 run_not_Event();
@@ -141,7 +161,8 @@ public class Barren_Moore {
     }
 
     private boolean run_Event(Event event) {
-        output("run_Event" );;
+        output("run_Event");
+        ;
         boolean x = false;
         String r = get_input_output(event);
         while (!x) {
@@ -156,7 +177,7 @@ public class Barren_Moore {
                 case "e":
                     move(0, 1);
                     x = true;
-                   // output(p.lat + "p,p" + p.lon);;
+                    // output(p.lat + "p,p" + p.lon);;
                     return false;
 
                 case "w":
@@ -177,11 +198,13 @@ public class Barren_Moore {
                     break;
                 case "1":
                     if (event.isPik()) {
-                    x = run_Event(event.getLeft());}
+                        x = run_Event(event.getLeft());
+                    }
                     break;
                 case "2":
                     if (event.isPik()) {
-                    x = run_Event(event.getRight());}
+                        x = run_Event(event.getRight());
+                    }
                     break;
                 case "q":
                     System.out.println("Excellent!");
@@ -195,6 +218,7 @@ public class Barren_Moore {
         }
         return true;
     }
+
     private boolean run_not_Event() {
         output("run_not_Event");
         boolean x = false;
